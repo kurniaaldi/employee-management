@@ -1,1 +1,21 @@
-<p>employee-detail works!</p>
+<div class="detail-container" *ngIf="employee">
+  <h2>Detail Employee</h2>
+  <p><strong>Username:</strong> {{ employee.username }}</p>
+  <p>
+    <strong>Full Name:</strong> {{ employee.firstName }} {{ employee.lastName }}
+  </p>
+  <p><strong>Email:</strong> {{ employee.email }}</p>
+  <p>
+    <strong>Birth Date:</strong>
+    {{ employee.birthDate | date : "dd MMMM yyyy" }}
+  </p>
+  <p>
+    <strong>Basic Salary:</strong> Rp
+    {{ employee.basicSalary | number : "1.0-0" }}
+  </p>
+  <p><strong>Status:</strong> {{ employee.status }}</p>
+  <p><strong>Group:</strong> {{ employee.group }}</p>
+  <p><strong>Description:</strong> {{ employee.description }}</p>
+
+  <button (click)="backToList()">OK</button>
+</div>

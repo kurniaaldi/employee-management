@@ -17,20 +17,33 @@ export class EmployeeListComponent {
   searchEmail = '';
   currentPage = 1;
   itemsPerPage = 10;
+  sortField: keyof Employee | '' = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
 
   constructor(private router: Router) {}
 
   get filteredEmployees() {
-    return this.employees
-      .filter(
-        (e) =>
-          e.firstName.toLowerCase().includes(this.searchName.toLowerCase()) &&
-          e.email.toLowerCase().includes(this.searchEmail.toLowerCase())
-      )
-      .slice(
-        (this.currentPage - 1) * this.itemsPerPage,
-        this.currentPage * this.itemsPerPage
-      );
+    let filtered = this.employees.filter(
+      (e) =>
+        e.firstName.toLowerCase().includes(this.searchName.toLowerCase()) &&
+        e.email.toLowerCase().includes(this.searchEmail.toLowerCase())
+    );
+
+    if (this.sortField !== '') {
+      filtered = filtered.sort((a, b) => {
+        const field = this.sortField as keyof Employee;
+        const valA = (a[field] ?? '').toString().toLowerCase();
+        const valB = (b[field] ?? '').toString().toLowerCase();
+        if (valA < valB) return this.sortDirection === 'asc' ? -1 : 1;
+        if (valA > valB) return this.sortDirection === 'asc' ? 1 : -1;
+        return 0;
+      });
+    }
+
+    return filtered.slice(
+      (this.currentPage - 1) * this.itemsPerPage,
+      this.currentPage * this.itemsPerPage
+    );
   }
 
   get totalPages() {
@@ -40,6 +53,15 @@ export class EmployeeListComponent {
         e.email.toLowerCase().includes(this.searchEmail.toLowerCase())
     );
     return Math.ceil(totalFiltered.length / this.itemsPerPage);
+  }
+
+  sortBy(field: keyof Employee) {
+    if (this.sortField === field) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortField = field;
+      this.sortDirection = 'asc';
+    }
   }
 
   nextPage() {

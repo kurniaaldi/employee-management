@@ -6,12 +6,12 @@
 <table>
   <thead>
     <tr>
-      <th>Username</th>
-      <th>Full Name</th>
-      <th>Email</th>
-      <th>Group</th>
-      <th>Status</th>
-      <th>Salary</th>
+      <th (click)="sortBy('username')">Username</th>
+      <th (click)="sortBy('firstName')">Full Name</th>
+      <th (click)="sortBy('email')">Email</th>
+      <th (click)="sortBy('group')">Group</th>
+      <th (click)="sortBy('status')">Status</th>
+      <th (click)="sortBy('basicSalary')">Salary</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -24,7 +24,7 @@
       <td>{{ emp.status }}</td>
       <td>Rp {{ emp.basicSalary | number : "1.0-0" }}</td>
       <td>
-        <button class="edit" (click)="editEmployee(emp)">Edit</button>
+        <button class="edit" [routerLink]="['/employees', emp.id]">Edit</button>
         <button class="delete" (click)="deleteEmployee(emp)">Delete</button>
       </td>
     </tr>
