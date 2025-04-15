@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Employee, EMPLOYEES } from '../../data/employee-data';
 import { Subscription } from 'rxjs';
 import { EmployeeService } from '../../services/employee.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-employee-list',
@@ -26,7 +27,8 @@ export class EmployeeListComponent {
 
   constructor(
     private router: Router,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private toastr: ToastrService
   ) {}
 
   get filteredEmployees() {
@@ -94,11 +96,11 @@ export class EmployeeListComponent {
   }
 
   editEmployee(emp: Employee) {
-    alert(`Edit ${emp.username}`);
+    this.toastr.warning('Data berhasil di ubah!', 'Berhasil');
   }
 
   deleteEmployee(emp: Employee) {
-    alert(`Delete ${emp.username}`);
+    this.toastr.error('Data berhasil di hapus!', 'Berhasil');
   }
 }
 ``;

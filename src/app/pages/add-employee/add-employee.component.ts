@@ -9,6 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { GROUPS } from '../../data/group-data';
 import { EmployeeService } from '../../services/employee.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-employee',
@@ -26,7 +27,8 @@ export class AddEmployeeComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private toastr: ToastrService
   ) {
     this.employeeForm = this.fb.group({
       username: ['', Validators.required],
@@ -48,7 +50,7 @@ export class AddEmployeeComponent {
     }
 
     this.employeeService.addEmployee(this.employeeForm.value);
-    alert('Data berhasil disimpan!');
+    this.toastr.success('Data berhasil disimpan!');
     this.router.navigate(['/employees']);
   }
 
