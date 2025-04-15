@@ -1,49 +1,79 @@
-<h2>Add New Employee</h2>
-<form [formGroup]="employeeForm" (ngSubmit)="onSave()">
-  <div>
-    <input type="text" placeholder="Username" formControlName="username" />
-  </div>
-  <div>
-    <input type="text" placeholder="First Name" formControlName="firstName" />
-  </div>
-  <div>
-    <input type="text" placeholder="Last Name" formControlName="lastName" />
-  </div>
-  <div><input type="email" placeholder="Email" formControlName="email" /></div>
-  <div><input type="date" formControlName="birthDate" max="{{ today }}" /></div>
-  <div>
-    <input
-      type="text"
-      placeholder="Basic Salary"
-      formControlName="basicSalary"
-    />
-  </div>
-  <div>
-    <select formControlName="status">
-      <option value="">-- Select Status --</option>
-      <option value="Permanent">Permanent</option>
-      <option value="Contract">Contract</option>
-    </select>
-  </div>
+<div class="container mt-4">
+  <h2>Add New Employee</h2>
+  <form [formGroup]="employeeForm" (ngSubmit)="onSave()">
+    <div class="mb-3">
+      <input
+        class="form-control"
+        placeholder="Username"
+        formControlName="username"
+      />
+    </div>
+    <div class="mb-3">
+      <input
+        class="form-control"
+        placeholder="First Name"
+        formControlName="firstName"
+      />
+    </div>
+    <div class="mb-3">
+      <input
+        class="form-control"
+        placeholder="Last Name"
+        formControlName="lastName"
+      />
+    </div>
+    <div class="mb-3">
+      <input
+        class="form-control"
+        type="email"
+        placeholder="Email"
+        formControlName="email"
+      />
+    </div>
+    <div class="mb-3">
+      <input
+        class="form-control"
+        type="date"
+        formControlName="birthDate"
+        max="{{ today }}"
+      />
+    </div>
+    <div class="mb-3">
+      <input
+        class="form-control"
+        placeholder="Basic Salary"
+        formControlName="basicSalary"
+      />
+    </div>
+    <div class="mb-3">
+      <select class="form-select" formControlName="status">
+        <option value="">-- Select Status --</option>
+        <option value="Permanent">Permanent</option>
+        <option value="Contract">Contract</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <input
+        type="text"
+        class="form-control mb-2"
+        placeholder="Search Group..."
+        (input)="filterGroup($event)"
+      />
+      <select class="form-select" formControlName="group">
+        <option *ngFor="let g of filteredGroups" [value]="g">{{ g }}</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <textarea
+        class="form-control"
+        placeholder="Description"
+        formControlName="description"
+      ></textarea>
+    </div>
 
-  <div>
-    <input
-      type="text"
-      placeholder="Search Group..."
-      (input)="filterGroup($event)"
-    />
-    <select formControlName="group">
-      <option *ngFor="let g of filteredGroups" [value]="g">{{ g }}</option>
-    </select>
-  </div>
-
-  <div>
-    <textarea
-      placeholder="Description"
-      formControlName="description"
-    ></textarea>
-  </div>
-
-  <button type="submit">Save</button>
-  <button type="button" (click)="onCancel()">Cancel</button>
-</form>
+    <button type="submit" class="btn btn-primary me-2">Save</button>
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">
+      Cancel
+    </button>
+  </form>
+</div>

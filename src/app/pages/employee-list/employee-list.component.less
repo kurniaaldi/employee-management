@@ -1,37 +1,105 @@
 .search-bar {
-  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+
   input {
-    margin-right: 10px;
-    padding: 5px;
+    flex: 1;
+    min-width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 
   th,
   td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
   }
 
   th {
-    background-color: #f2f2f2;
+    background-color: #f7f7f7;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+      background-color: #eee;
+    }
+  }
+
+  @media (max-width: 768px) {
+    thead {
+      display: none;
+    }
+
+    tr {
+      display: block;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    td {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border: none;
+      border-bottom: 1px solid #eee;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &::before {
+        content: attr(data-label);
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+td[data-label] {
+  @media (max-width: 768px) {
+    display: flex;
   }
 }
 
 .edit {
-  background-color: yellow;
+  background-color: #ffeb3b;
+  border: none;
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  border-radius: 4px;
 }
+
 .delete {
-  background-color: red;
+  background-color: #f44336;
   color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
 .pagination {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
+
+  select {
+    padding: 6px;
+  }
 }
