@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Employee, EMPLOYEES } from '../../data/employee-data';
+import { Subscription } from 'rxjs';
+import { EmployeeService } from '../../services/employee.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -12,7 +14,9 @@ import { Employee, EMPLOYEES } from '../../data/employee-data';
   styleUrls: ['./employee-list.component.less'],
 })
 export class EmployeeListComponent {
-  employees: Employee[] = EMPLOYEES;
+  employees: Employee[] = [];
+  subscription!: Subscription;
+
   searchName = '';
   searchEmail = '';
   currentPage = 1;
@@ -20,7 +24,10 @@ export class EmployeeListComponent {
   sortField: keyof Employee | '' = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private employeeService: EmployeeService
+  ) {}
 
   get filteredEmployees() {
     let filtered = this.employees.filter(
@@ -53,6 +60,16 @@ export class EmployeeListComponent {
         e.email.toLowerCase().includes(this.searchEmail.toLowerCase())
     );
     return Math.ceil(totalFiltered.length / this.itemsPerPage);
+  }
+
+  ngOnInit(): void {
+    this.subscription = this.employeeService.employees$.subscribe(
+      (data) => (this.employees = data)
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   sortBy(field: keyof Employee) {

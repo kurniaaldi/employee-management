@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GROUPS } from '../../data/group-data';
+import { EmployeeService } from '../../services/employee.service';
 
 @Component({
   selector: 'app-add-employee',
@@ -22,7 +23,11 @@ export class AddEmployeeComponent {
   filteredGroups = GROUPS;
   today = new Date().toISOString().split('T')[0];
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private employeeService: EmployeeService
+  ) {
     this.employeeForm = this.fb.group({
       username: ['', Validators.required],
       firstName: ['', Validators.required],
@@ -42,7 +47,7 @@ export class AddEmployeeComponent {
       return;
     }
 
-    console.log('Data karyawan:', this.employeeForm.value);
+    this.employeeService.addEmployee(this.employeeForm.value);
     alert('Data berhasil disimpan!');
     this.router.navigate(['/employees']);
   }

@@ -53,12 +53,6 @@
       </select>
     </div>
     <div class="mb-3">
-      <input
-        type="text"
-        class="form-control mb-2"
-        placeholder="Search Group..."
-        (input)="filterGroup($event)"
-      />
       <select class="form-select" formControlName="group">
         <option *ngFor="let g of filteredGroups" [value]="g">{{ g }}</option>
       </select>
